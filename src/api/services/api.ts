@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "../endpoints";
-import { Restaurant } from "../../types";
+import { Filter, Restaurant } from "../../types";
 
 export const getRestaurants = async (): Promise<Restaurant[]> => {
   try {
@@ -7,8 +7,6 @@ export const getRestaurants = async (): Promise<Restaurant[]> => {
     if (!response.ok) throw new Error("Failed to fetch restaurants");
 
     const data = await response.json();
-    console.log("API response data:", data);
-
     if (Array.isArray(data)) {
       return data;
     } else if (data && typeof data === "object") {
@@ -21,6 +19,22 @@ export const getRestaurants = async (): Promise<Restaurant[]> => {
     return [];
   } catch (error) {
     console.error("Error fetching restaurants:", error);
+    throw error;
+  }
+};
+
+export const getFilters = async (): Promise<Filter[]> => {
+  try {
+    const response = await fetch(ENDPOINTS.filters);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch filters: ${response.status}`);
+    }
+    const data = await response.json();
+
+    return data.filters || [];
+  } catch (error) {
+    console.error("Error fetching filters:", error);
     throw error;
   }
 };
