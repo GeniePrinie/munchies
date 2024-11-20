@@ -3,6 +3,7 @@ import RestaurantList from "./components/RestaurantList/RestaurantList";
 import Topbar from "./components/Layout/Topbar";
 import { Filter } from "./types";
 import { getFilters } from "./api/services";
+import Sidebar from "./components/Layout/Sidebar";
 
 function App() {
   const [filters, setFilters] = useState<Filter[]>([]);
@@ -29,19 +30,35 @@ function App() {
     );
   };
   return (
-    <div className="bg-gray-50  py-6 px-7">
+    <div className="bg-gray-50 min-h-screen py-6 px-7">
       <header className="flex items-center gap-2">
         <div className="w-7">
           <img src="/images/logo/munchiesLogo.png" alt="munchies logo" />
         </div>
         <h1 className="text-4xl">Munchies</h1>
       </header>
-      <Topbar
-        filters={filters}
-        activeFilters={activeFilters}
-        onToggle={handleFilterToggle}
-      />
-      <RestaurantList activeFilters={activeFilters} />
+
+      <div className="min-h-screen bg-gray-50 flex">
+        <div className="w-64 absolute left-8 top-20 h-screen">
+          <Sidebar
+            filters={filters}
+            activeFilters={activeFilters}
+            onToggle={handleFilterToggle}
+          />
+        </div>
+
+        <div className="flex-1 ml-64">
+          <Topbar
+            filters={filters}
+            activeFilters={activeFilters}
+            onToggle={handleFilterToggle}
+          />
+
+          <main className="px-4 sm:px-6 lg:px-8 py-4">
+            <RestaurantList activeFilters={activeFilters} />
+          </main>
+        </div>
+      </div>
     </div>
   );
 }
