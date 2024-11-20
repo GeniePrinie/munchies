@@ -1,17 +1,22 @@
 import React from "react";
-import { Filter } from "../../types";
+import { DELIVERY_TIME_RANGES, DeliveryTimeRange, Filter } from "../../types";
 import FoodCategory from "../Filters/FoodCategory";
+import DeliveryTime from "../Filters/DeliveryTime";
 
 interface SidebarProps {
   filters: Filter[];
   activeFilters: string[];
+  activeDeliveryTimes: string[];
   onToggle: (filter: Filter) => void;
+  onDeliveryTimeToggle: (timeRange: DeliveryTimeRange) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   filters,
   activeFilters,
+  activeDeliveryTimes,
   onToggle,
+  onDeliveryTimeToggle,
 }) => {
   if (!Array.isArray(filters)) {
     return null;
@@ -37,6 +42,15 @@ const Sidebar: React.FC<SidebarProps> = ({
         <h4 className="text-gray-400 uppercase text-xs font-semibold pt-5">
           Delivery time
         </h4>
+
+        {DELIVERY_TIME_RANGES.map((timeRange) => (
+          <DeliveryTime
+            key={timeRange.id}
+            timeRange={timeRange}
+            isActive={activeDeliveryTimes.includes(timeRange.id)}
+            onToggle={onDeliveryTimeToggle}
+          />
+        ))}
 
         <h4 className="text-gray-400 uppercase text-xs font-semibold pt-5">
           Price range
