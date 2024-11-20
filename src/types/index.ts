@@ -8,12 +8,16 @@ export interface Restaurant {
   price_range_id: string;
 }
 
-export interface Filter {
-  id: string;
-  label: string;
-  category: "cuisine" | "price" | "rating";
-}
-
 export interface RestaurantResponse {
   restaurants: Restaurant[];
+}
+
+export interface Filter {
+  id: string;
+  name: string;
+  image_url: string;
+}
+
+export interface FilterResponse {
+  filters: Filter[];
 }
